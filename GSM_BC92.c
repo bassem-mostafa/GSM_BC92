@@ -5232,7 +5232,7 @@ static GSM_BC92_Status_t GSM_BC92_Parse( GSM_BC92_Instance_t * Instance )
             if ( Instance->Context->Transmit.Command.Type == GSM_BC92_CommandType_Send_SMS_Message
                  && memcmp( Instance->Context->Receive.Content, "> ", UTIL_SizeOfWithoutNull( "> " ) ) == 0 )
             {
-                // FIXME
+                // FIXME SMS Content Handling
                 // Note: Consider end delimiter received and continue
                 Instance->Context->Receive.Length += UTIL_SizeOfWithoutNull( delimiter );
             }
@@ -5251,7 +5251,7 @@ static GSM_BC92_Status_t GSM_BC92_Parse( GSM_BC92_Instance_t * Instance )
         {
             if ( ( Status = Instance->Context->Operation.Handler( Instance ) ) != GSM_BC92_Status_Success )
             {
-                // FIXME
+                // FIXME Operation Failure handling
                 GSM_Warning( "Solicited Response [%d]: %s, Status: %d", Instance->Context->Receive.Length, Instance->Context->Receive.Content, Status );
             }
         }
@@ -5259,7 +5259,7 @@ static GSM_BC92_Status_t GSM_BC92_Parse( GSM_BC92_Instance_t * Instance )
         {
             if ( ( Status = GSM_BC92_UnSolicited_Handler( Instance ) ) != GSM_BC92_Status_Success )
             {
-                // FIXME
+                // FIXME Unknown response handling
                 GSM_Warning( "UnSolicited Response [%d]: %s, Status: %d", Instance->Context->Receive.Length, Instance->Context->Receive.Content, Status );
             }
         }
@@ -5267,7 +5267,7 @@ static GSM_BC92_Status_t GSM_BC92_Parse( GSM_BC92_Instance_t * Instance )
         {
             if ( ( Status = Instance->Context->Process.Handler( Instance ) ) != GSM_BC92_Status_Success )
             {
-                // FIXME
+                // FIXME Process Failure handling
             }
         }
         // Remove Response
@@ -5529,14 +5529,14 @@ static GSM_BC92_Status_t GSM_BC92_Instance_Cycle( GSM_BC92_Instance_t * Instance
         {
             if ( ( Status = Instance->Context->Operation.Handler( Instance ) ) != GSM_BC92_Status_Success )
             {
-                // FIXME
+                // FIXME Operation Failure Handling
             }
         }
         if ( Instance->Context->Process.Handler != NULL )
         {
             if ( ( Status = Instance->Context->Process.Handler( Instance ) ) != GSM_BC92_Status_Success )
             {
-                // FIXME
+                // FIXME Process Failure Handling
             }
         }
     }
@@ -5605,7 +5605,7 @@ GSM_BC92_Status_t GSM_BC92_Initialize( GSM_BC92_Instance_t * Instance )
         GSM_Trace( "%s( Instance=%p )", __FUNCTION__, Instance );
         if ( ( Status = GSM_BC92_Context_Initialize( ) ) != GSM_BC92_Status_Success )
         {
-            // FIXME
+            // FIXME Context Initialization Failure Handling
         }
         if ( ( Status = GSM_BC92_Instance_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
@@ -5647,7 +5647,7 @@ GSM_BC92_Status_t GSM_BC92_Cycle( GSM_BC92_Instance_t * Instance )
 
 GSM_BC92_Status_t GSM_BC92_DeInitialize( GSM_BC92_Instance_t * Instance )
 {
-    GSM_BC92_Status_t Status = GSM_BC92_Status_Error;
+    GSM_BC92_Status_t Status = GSM_BC92_Status_Success;
     do
     {
         GSM_Trace( "%s( Instance=%p )", __FUNCTION__, Instance );
@@ -5655,8 +5655,6 @@ GSM_BC92_Status_t GSM_BC92_DeInitialize( GSM_BC92_Instance_t * Instance )
         {
             break;
         }
-        // TODO
-        Status = GSM_BC92_Status_Success;
     }
     while ( 0 );
     return Status;
