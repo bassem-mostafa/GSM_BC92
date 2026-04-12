@@ -383,7 +383,7 @@ typedef struct GSM_BC92_BufferReceive
     uint8_t Content[ GSM_BC92_BUFFER_SIZE_RECEIVE ];
 } GSM_BC92_BufferReceive_t;
 
-typedef struct GSM_BC92_Instance_Context
+typedef struct GSM_BC92_InstanceContext
 {
     GSM_BC92_BufferTransmit_t Transmit;
     GSM_BC92_BufferReceive_t Receive;
@@ -397,12 +397,12 @@ typedef struct GSM_BC92_Instance_Context
         GSM_Port_t Port;
     } Argument;
 
-} GSM_BC92_Instance_Context_t;
+} GSM_BC92_InstanceContext_t;
 
 typedef struct GSM_BC92_Context
 {
     TIM_Timestamp_t Timestamp;
-    GSM_BC92_Instance_Context_t Context[ GSM_BC92_Count ];
+    GSM_BC92_InstanceContext_t Context[ GSM_BC92_Count ];
 } GSM_BC92_Context_t;
 
 // #############################################################################
@@ -552,9 +552,9 @@ static GSM_BC92_Status_t GSM_BC92_Read( GSM_BC92_Instance_t * Instance );
 static GSM_BC92_Status_t GSM_BC92_Execute( GSM_BC92_Instance_t * Instance );
 static GSM_BC92_Status_t GSM_BC92_Write( GSM_BC92_Instance_t * Instance );
 
-static GSM_BC92_Status_t GSM_BC92_Instance_Context_IsValid( GSM_BC92_Instance_t * Instance );
-static GSM_BC92_Status_t GSM_BC92_Instance_Context_Initialize( GSM_BC92_Instance_t * Instance );
-static GSM_BC92_Status_t GSM_BC92_Instance_Context_DeInitialize( GSM_BC92_Instance_t * Instance );
+static GSM_BC92_Status_t GSM_BC92_InstanceContext_IsValid( GSM_BC92_Instance_t * Instance );
+static GSM_BC92_Status_t GSM_BC92_InstanceContext_Initialize( GSM_BC92_Instance_t * Instance );
+static GSM_BC92_Status_t GSM_BC92_InstanceContext_DeInitialize( GSM_BC92_Instance_t * Instance );
 
 static GSM_BC92_Status_t GSM_BC92_Instance_IsValid( GSM_BC92_Instance_t * Instance );
 static GSM_BC92_Status_t GSM_BC92_Instance_Initialize( GSM_BC92_Instance_t * Instance );
@@ -585,7 +585,7 @@ static GSM_BC92_Status_t GSM_BC92_Process_Socket_Open_Handler( GSM_BC92_Instance
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -643,7 +643,7 @@ static GSM_BC92_Status_t GSM_BC92_Process_Initialize_Handler( GSM_BC92_Instance_
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -792,7 +792,7 @@ static GSM_BC92_Status_t GSM_BC92_Process_Command_Handler( GSM_BC92_Instance_t *
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -842,7 +842,7 @@ static GSM_BC92_Status_t GSM_BC92_Process_Set( GSM_BC92_Instance_t * Instance, G
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -897,7 +897,7 @@ static GSM_BC92_Status_t GSM_BC92_Power_Off_Handler( GSM_BC92_Instance_t * Insta
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -943,7 +943,7 @@ static GSM_BC92_Status_t GSM_BC92_Power_Off_Execute( GSM_BC92_Instance_t * Insta
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -970,7 +970,7 @@ static GSM_BC92_Status_t GSM_BC92_Power_On_Handler( GSM_BC92_Instance_t * Instan
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1022,7 +1022,7 @@ static GSM_BC92_Status_t GSM_BC92_Power_On_Execute( GSM_BC92_Instance_t * Instan
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1060,7 +1060,7 @@ static GSM_BC92_Status_t GSM_BC92_Ping_Handler( GSM_BC92_Instance_t * Instance )
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1123,7 +1123,7 @@ static GSM_BC92_Status_t GSM_BC92_Ping_Execute( GSM_BC92_Instance_t * Instance )
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1155,7 +1155,7 @@ static GSM_BC92_Status_t GSM_BC92_Display_Product_Identification_Information_Han
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1233,7 +1233,7 @@ static GSM_BC92_Status_t GSM_BC92_Display_Product_Identification_Information_Exe
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1265,7 +1265,7 @@ static GSM_BC92_Status_t GSM_BC92_Set_Command_Echo_Mode_Handler( GSM_BC92_Instan
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1328,7 +1328,7 @@ static GSM_BC92_Status_t GSM_BC92_Set_Command_Echo_Mode_Execute( GSM_BC92_Instan
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1360,7 +1360,7 @@ static GSM_BC92_Status_t GSM_BC92_Store_Current_Parameters_To_User_Defined_Profi
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1423,7 +1423,7 @@ static GSM_BC92_Status_t GSM_BC92_Store_Current_Parameters_To_User_Defined_Profi
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1455,7 +1455,7 @@ static GSM_BC92_Status_t GSM_BC92_Set_All_Parameters_To_Manufacturer_Defaults_Ha
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1518,7 +1518,7 @@ static GSM_BC92_Status_t GSM_BC92_Set_All_Parameters_To_Manufacturer_Defaults_Ex
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1550,7 +1550,7 @@ static GSM_BC92_Status_t GSM_BC92_Request_Manufacturer_Identification_Handler( G
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1628,7 +1628,7 @@ static GSM_BC92_Status_t GSM_BC92_Request_Manufacturer_Identification_Execute( G
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1660,7 +1660,7 @@ static GSM_BC92_Status_t GSM_BC92_Request_Model_Identification_Handler( GSM_BC92
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1728,7 +1728,7 @@ static GSM_BC92_Status_t GSM_BC92_Request_Model_Identification_Execute( GSM_BC92
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1760,7 +1760,7 @@ static GSM_BC92_Status_t GSM_BC92_Request_Manufacturer_Revision_Handler( GSM_BC9
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1828,7 +1828,7 @@ static GSM_BC92_Status_t GSM_BC92_Request_Manufacturer_Revision_Execute( GSM_BC9
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1860,7 +1860,7 @@ static GSM_BC92_Status_t GSM_BC92_Request_Product_Serial_Number_Handler( GSM_BC9
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1928,7 +1928,7 @@ static GSM_BC92_Status_t GSM_BC92_Request_Product_Serial_Number_Execute( GSM_BC9
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -1960,7 +1960,7 @@ static GSM_BC92_Status_t GSM_BC92_Report_Mobile_Termination_Error_Handler( GSM_B
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2023,7 +2023,7 @@ static GSM_BC92_Status_t GSM_BC92_Report_Mobile_Termination_Error_Execute( GSM_B
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2055,7 +2055,7 @@ static GSM_BC92_Status_t GSM_BC92_Extended_Error_Report_Handler( GSM_BC92_Instan
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2123,7 +2123,7 @@ static GSM_BC92_Status_t GSM_BC92_Extended_Error_Report_Execute( GSM_BC92_Instan
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2155,7 +2155,7 @@ static GSM_BC92_Status_t GSM_BC92_Set_TE_TA_Fixed_Local_Rate_Handler( GSM_BC92_I
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2223,7 +2223,7 @@ static GSM_BC92_Status_t GSM_BC92_Set_TE_TA_Fixed_Local_Rate_Execute( GSM_BC92_I
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2255,7 +2255,7 @@ static GSM_BC92_Status_t GSM_BC92_Set_TE_TA_Control_Character_Framing_Handler( G
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2323,7 +2323,7 @@ static GSM_BC92_Status_t GSM_BC92_Set_TE_TA_Control_Character_Framing_Execute( G
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2355,7 +2355,7 @@ static GSM_BC92_Status_t GSM_BC92_Set_TE_TA_Local_Data_Flow_Control_Handler( GSM
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2423,7 +2423,7 @@ static GSM_BC92_Status_t GSM_BC92_Set_TE_TA_Local_Data_Flow_Control_Execute( GSM
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2455,7 +2455,7 @@ static GSM_BC92_Status_t GSM_BC92_Enter_PIN_Handler( GSM_BC92_Instance_t * Insta
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2524,7 +2524,7 @@ static GSM_BC92_Status_t GSM_BC92_Enter_PIN_Execute( GSM_BC92_Instance_t * Insta
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2556,7 +2556,7 @@ static GSM_BC92_Status_t GSM_BC92_Request_International_Mobile_Subscriber_Identi
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2649,7 +2649,7 @@ static GSM_BC92_Status_t GSM_BC92_Request_International_Mobile_Subscriber_Identi
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2681,7 +2681,7 @@ static GSM_BC92_Status_t GSM_BC92_USIM_Card_Identification_Handler( GSM_BC92_Ins
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2749,7 +2749,7 @@ static GSM_BC92_Status_t GSM_BC92_USIM_Card_Identification_Execute( GSM_BC92_Ins
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2781,7 +2781,7 @@ static GSM_BC92_Status_t GSM_BC92_Signal_Quality_Report_Handler( GSM_BC92_Instan
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2849,7 +2849,7 @@ static GSM_BC92_Status_t GSM_BC92_Signal_Quality_Report_Execute( GSM_BC92_Instan
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2881,7 +2881,7 @@ static GSM_BC92_Status_t GSM_BC92_GSM_Network_Registration_Status_Handler( GSM_B
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2950,7 +2950,7 @@ static GSM_BC92_Status_t GSM_BC92_GSM_Network_Registration_Status_Execute( GSM_B
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -2982,7 +2982,7 @@ static GSM_BC92_Status_t GSM_BC92_GPRS_Network_Registration_Status_Handler( GSM_
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3051,7 +3051,7 @@ static GSM_BC92_Status_t GSM_BC92_GPRS_Network_Registration_Status_Execute( GSM_
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3083,7 +3083,7 @@ static GSM_BC92_Status_t GSM_BC92_PS_Attach_or_Detach_Handler( GSM_BC92_Instance
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3152,7 +3152,7 @@ static GSM_BC92_Status_t GSM_BC92_PS_Attach_or_Detach_Execute( GSM_BC92_Instance
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3184,7 +3184,7 @@ static GSM_BC92_Status_t GSM_BC92_Set_Default_PSD_Connection_Settings_Handler( G
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3252,7 +3252,7 @@ static GSM_BC92_Status_t GSM_BC92_Set_Default_PSD_Connection_Settings_Execute( G
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3284,7 +3284,7 @@ static GSM_BC92_Status_t GSM_BC92_Define_A_PDP_Context_Handler( GSM_BC92_Instanc
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3352,7 +3352,7 @@ static GSM_BC92_Status_t GSM_BC92_Define_A_PDP_Context_Execute( GSM_BC92_Instanc
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3384,7 +3384,7 @@ static GSM_BC92_Status_t GSM_BC92_PDP_Context_Activation_or_Deactivation_Handler
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3452,7 +3452,7 @@ static GSM_BC92_Status_t GSM_BC92_PDP_Context_Activation_or_Deactivation_Execute
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3484,7 +3484,7 @@ static GSM_BC92_Status_t GSM_BC92_Show_PDP_Addresses_Handler( GSM_BC92_Instance_
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3552,7 +3552,7 @@ static GSM_BC92_Status_t GSM_BC92_Show_PDP_Addresses_Execute( GSM_BC92_Instance_
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3586,7 +3586,7 @@ static GSM_BC92_Status_t GSM_BC92_Socket_Open_Handler( GSM_BC92_Instance_t * Ins
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3674,7 +3674,7 @@ static GSM_BC92_Status_t GSM_BC92_Socket_Open_Execute( GSM_BC92_Instance_t * Ins
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3706,7 +3706,7 @@ static GSM_BC92_Status_t GSM_BC92_Socket_Write_Handler( GSM_BC92_Instance_t * In
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3782,7 +3782,7 @@ static GSM_BC92_Status_t GSM_BC92_Socket_Write_Execute( GSM_BC92_Instance_t * In
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3814,7 +3814,7 @@ static GSM_BC92_Status_t GSM_BC92_Socket_Read_Handler( GSM_BC92_Instance_t * Ins
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3892,7 +3892,7 @@ static GSM_BC92_Status_t GSM_BC92_Socket_Read_Execute( GSM_BC92_Instance_t * Ins
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3924,7 +3924,7 @@ static GSM_BC92_Status_t GSM_BC92_Set_UE_Functionality_Handler( GSM_BC92_Instanc
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -3993,7 +3993,7 @@ static GSM_BC92_Status_t GSM_BC92_Set_UE_Functionality_Execute( GSM_BC92_Instanc
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4025,7 +4025,7 @@ static GSM_BC92_Status_t GSM_BC92_Reset_The_Module_Handler( GSM_BC92_Instance_t 
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4093,7 +4093,7 @@ static GSM_BC92_Status_t GSM_BC92_Reset_The_Module_Execute( GSM_BC92_Instance_t 
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4125,7 +4125,7 @@ static GSM_BC92_Status_t GSM_BC92_Power_Off_The_Module_Handler( GSM_BC92_Instanc
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4194,7 +4194,7 @@ static GSM_BC92_Status_t GSM_BC92_Power_Off_The_Module_Execute( GSM_BC92_Instanc
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4226,7 +4226,7 @@ static GSM_BC92_Status_t GSM_BC92_Return_Current_Date_and_Time_Handler( GSM_BC92
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4303,7 +4303,7 @@ static GSM_BC92_Status_t GSM_BC92_Return_Current_Date_and_Time_Execute( GSM_BC92
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4335,7 +4335,7 @@ static GSM_BC92_Status_t GSM_BC92_Query_Power_Supply_Voltage_Handler( GSM_BC92_I
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4409,7 +4409,7 @@ static GSM_BC92_Status_t GSM_BC92_Query_Power_Supply_Voltage_Execute( GSM_BC92_I
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4441,7 +4441,7 @@ static GSM_BC92_Status_t GSM_BC92_Select_SMS_Message_Format_Handler( GSM_BC92_In
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4504,7 +4504,7 @@ static GSM_BC92_Status_t GSM_BC92_Select_SMS_Message_Format_Execute( GSM_BC92_In
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4536,7 +4536,7 @@ static GSM_BC92_Status_t GSM_BC92_Send_SMS_Message_Handler( GSM_BC92_Instance_t 
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4609,7 +4609,7 @@ static GSM_BC92_Status_t GSM_BC92_Send_SMS_Message_Execute( GSM_BC92_Instance_t 
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4642,7 +4642,7 @@ static GSM_BC92_Status_t GSM_BC92_PS_Attach_or_Detach_Status_Handler( GSM_BC92_I
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4690,7 +4690,7 @@ static GSM_BC92_Status_t GSM_BC92_SMS_Received_Handler( GSM_BC92_Instance_t * In
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4730,7 +4730,7 @@ static GSM_BC92_Status_t GSM_BC92_GPRS_Registration_Status_Handler( GSM_BC92_Ins
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4801,7 +4801,7 @@ static GSM_BC92_Status_t GSM_BC92_Result_Code_Handler( GSM_BC92_Instance_t * Ins
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4859,7 +4859,7 @@ static GSM_BC92_Status_t GSM_BC92_GSM_Registration_Status_Handler( GSM_BC92_Inst
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4922,7 +4922,7 @@ static GSM_BC92_Status_t GSM_BC92_SIM_Status_Handler( GSM_BC92_Instance_t * Inst
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -4975,7 +4975,7 @@ static GSM_BC92_Status_t GSM_BC92_Device_Functionality_Handler( GSM_BC92_Instanc
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -5023,7 +5023,7 @@ static GSM_BC92_Status_t GSM_BC92_Device_Reset_Handler( GSM_BC92_Instance_t * In
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -5063,7 +5063,7 @@ static GSM_BC92_Status_t GSM_BC92_UnSolicited_Handler( GSM_BC92_Instance_t * Ins
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -5104,7 +5104,7 @@ static GSM_BC92_Status_t GSM_BC92_IsIdle( GSM_BC92_Instance_t * Instance )
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -5129,7 +5129,7 @@ static GSM_BC92_Status_t GSM_BC92_IsTimeout( GSM_BC92_Instance_t * Instance )
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -5155,7 +5155,7 @@ static GSM_BC92_Status_t GSM_BC92_Delay( GSM_BC92_Instance_t * Instance, uint32_
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -5181,7 +5181,7 @@ static GSM_BC92_Status_t GSM_BC92_IsReady( GSM_BC92_Instance_t * Instance )
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -5207,7 +5207,7 @@ static GSM_BC92_Status_t GSM_BC92_Parse( GSM_BC92_Instance_t * Instance )
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -5290,7 +5290,7 @@ static GSM_BC92_Status_t GSM_BC92_Read( GSM_BC92_Instance_t * Instance )
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -5321,7 +5321,7 @@ static GSM_BC92_Status_t GSM_BC92_Execute( GSM_BC92_Instance_t * Instance )
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -5356,7 +5356,7 @@ static GSM_BC92_Status_t GSM_BC92_Write( GSM_BC92_Instance_t * Instance )
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }
@@ -5372,7 +5372,7 @@ static GSM_BC92_Status_t GSM_BC92_Write( GSM_BC92_Instance_t * Instance )
     return Status;
 }
 
-static GSM_BC92_Status_t GSM_BC92_Instance_Context_IsValid( GSM_BC92_Instance_t * Instance )
+static GSM_BC92_Status_t GSM_BC92_InstanceContext_IsValid( GSM_BC92_Instance_t * Instance )
 {
     GSM_BC92_Status_t Status = GSM_BC92_Status_Error;
     do
@@ -5393,7 +5393,7 @@ static GSM_BC92_Status_t GSM_BC92_Instance_Context_IsValid( GSM_BC92_Instance_t 
     return Status;
 }
 
-static GSM_BC92_Status_t GSM_BC92_Instance_Context_Initialize( GSM_BC92_Instance_t * Instance )
+static GSM_BC92_Status_t GSM_BC92_InstanceContext_Initialize( GSM_BC92_Instance_t * Instance )
 {
     GSM_BC92_Status_t Status = GSM_BC92_Status_Error;
     do
@@ -5403,16 +5403,16 @@ static GSM_BC92_Status_t GSM_BC92_Instance_Context_Initialize( GSM_BC92_Instance
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             RAM_Status_t RAM_Status = RAM_Status_Success;
-            if ( ( RAM_Status = RAM_Allocate( RAM_1, ( RAM_Reference_t * ) &Instance->Context, UTIL_SizeOf( GSM_BC92_Instance_Context_t ) ) ) != RAM_Status_Success )
+            if ( ( RAM_Status = RAM_Allocate( RAM_1, ( RAM_Reference_t * ) &Instance->Context, UTIL_SizeOf( GSM_BC92_InstanceContext_t ) ) ) != RAM_Status_Success )
             {
                 Status = GSM_BC92_Status_Error;
                 break;
             }
             // Double check context validity
-            if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+            if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
             {
                 break;
             }
@@ -5440,7 +5440,7 @@ static GSM_BC92_Status_t GSM_BC92_Instance_Context_Initialize( GSM_BC92_Instance
     return Status;
 }
 
-static GSM_BC92_Status_t GSM_BC92_Instance_Context_DeInitialize( GSM_BC92_Instance_t * Instance )
+static GSM_BC92_Status_t GSM_BC92_InstanceContext_DeInitialize( GSM_BC92_Instance_t * Instance )
 {
     GSM_BC92_Status_t Status = GSM_BC92_Status_Error;
     do
@@ -5450,7 +5450,7 @@ static GSM_BC92_Status_t GSM_BC92_Instance_Context_DeInitialize( GSM_BC92_Instan
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) == GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) == GSM_BC92_Status_Success )
         {
             RAM_Status_t RAM_Status = RAM_Status_Success;
             if ( ( RAM_Status = RAM_DeAllocate( RAM_1, ( RAM_Reference_t * ) &Instance->Context ) ) != RAM_Status_Success )
@@ -5489,7 +5489,7 @@ static GSM_BC92_Status_t GSM_BC92_Instance_Initialize( GSM_BC92_Instance_t * Ins
     do
     {
         GSM_Trace( "%s( Instance=%p )", __FUNCTION__, Instance );
-        Status = GSM_BC92_Instance_Context_Initialize( Instance );
+        Status = GSM_BC92_InstanceContext_Initialize( Instance );
     }
     while ( 0 );
     return Status;
@@ -5501,7 +5501,7 @@ static GSM_BC92_Status_t GSM_BC92_Instance_DeInitialize( GSM_BC92_Instance_t * I
     do
     {
         GSM_Trace( "%s( Instance=%p )", __FUNCTION__, Instance );
-        Status = GSM_BC92_Instance_Context_DeInitialize( Instance );
+        Status = GSM_BC92_InstanceContext_DeInitialize( Instance );
     }
     while ( 0 );
     return Status;
@@ -5517,7 +5517,7 @@ static GSM_BC92_Status_t GSM_BC92_Instance_Cycle( GSM_BC92_Instance_t * Instance
         {
             break;
         }
-        if ( ( Status = GSM_BC92_Instance_Context_IsValid( Instance ) ) != GSM_BC92_Status_Success )
+        if ( ( Status = GSM_BC92_InstanceContext_IsValid( Instance ) ) != GSM_BC92_Status_Success )
         {
             break;
         }

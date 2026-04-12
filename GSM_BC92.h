@@ -138,7 +138,7 @@ extern "C"
 
     typedef void ( *GSM_BC92_Callback_OnSocketClose_t )( GSM_BC92_Instance_t * Instance );
 
-    typedef struct GSM_BC92_Instance_Context GSM_BC92_Instance_Context_t;
+    typedef struct GSM_BC92_InstanceContext GSM_BC92_InstanceContext_t;
 
     typedef struct GSM_BC92_Instance
     {
@@ -157,7 +157,7 @@ extern "C"
         GSM_BC92_Callback_OnSocketClose_t OnSocketClose;
 
         // Managed Internally
-        GSM_BC92_Instance_Context_t * Context;
+        GSM_BC92_InstanceContext_t * Context;
     } GSM_BC92_Instance_t;
 
     typedef enum GSM_BC92_Argument_Set_Command_Echo_Mode
